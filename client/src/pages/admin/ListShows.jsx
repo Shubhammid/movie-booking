@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const ListShows = () => {
-  return (
-    <div>ListShows</div>
-  )
-}
+  const currency = import.meta.env.VITE_CURRENCY;
 
-export default ListShows
+  const [shows, setShows] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  return <div>ListShows</div>;
+};
+
+export default ListShows;
