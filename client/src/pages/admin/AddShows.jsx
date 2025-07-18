@@ -156,7 +156,7 @@ const AddShows = () => {
       )}
 
       <button className="bg-primary text-white px-8 py-2 mt-6 rounded hover:bg-primary/90 transition-all cursor-pointer">
-        Add Shows
+        Add Show
       </button>
     </>
   ) : (
