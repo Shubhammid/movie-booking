@@ -93,4 +93,18 @@ export const getShows = async (req, res) => {
   }
 };
 
-
+export const getShow = async (req, res) => {
+  try {
+    const {movieId} = req.params;
+    const shows = await Show.find({ movie: movieId, showDateTime: { $gte: new Date() }})
+    const movie = await Movie.findById(movieId);
+    const dateTime = {};
+    shows.forEach((show) => {
+      
+    })
+    res.json({ success: true, shows: Array.from(uniqueShows) });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
