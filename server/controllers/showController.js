@@ -1,6 +1,6 @@
 import axios from "axios";
 import Movie from "../models/Movie.js";
-import Show from "../models/Show.js"
+import Show from "../models/Show.js";
 
 export const getNowPlayingMovies = async (req, res) => {
   try {
@@ -28,12 +28,14 @@ export const addShow = async (req, res) => {
     if (!movie) {
       const [movieDetailsResponse, movieCreditsReponse] = await Promise.all([
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` } }),
+          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+        }),
 
         axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
-          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` } }),
+          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+        }),
       ]);
-      
+
       const movieApiData = movieDetailsResponse.data;
       const movieCreditsData = movieCreditsReponse.data;
 
@@ -55,20 +57,20 @@ export const addShow = async (req, res) => {
     }
 
     const showsToCreate = [];
-    showsInput.forEach(show => {
+    showsInput.forEach((show) => {
       const showDate = show.date;
-      show.time.forEach((time)=> {
+      show.time.forEach((time) => {
         const dateTimeString = `${showDate}T${time}`;
         showsToCreate.push({
           movie: movieId,
           showDateTime: new Date(dateTimeString),
           showPrice,
-          occupiedSeats: {}
-        })
-      })
-    })
+          occupiedSeats: {},
+        });
+      });
+    });
 
-    if(showsToCreate.length > 0) {
+    if (showsToCreate.length > 0) {
       await Show.insertMany(showsToCreate);
     }
     res.json({ success: true, message: "Show Added Successfully." });
@@ -77,3 +79,18 @@ export const addShow = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+export const getShows = async (req, res) => {
+  try {
+    const shows = await Show.find({ showDateTime: { $gte: new Date() }})
+      .populate("movie")
+      .sort({ showDateTime: 1 });
+    const uniqueShows = new Set(shows.map((show) => show.movie));
+    res.json({ success: true, shows: Array.from(uniqueShows) });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
