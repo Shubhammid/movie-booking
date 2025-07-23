@@ -13,7 +13,7 @@ export const AppProvider = ({ children }) => {
   const [shows, setShows] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
-  const { user } = useUser();
+  const { user   } = useUser();
   const { getToken } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();

@@ -35,7 +35,7 @@ const App = () => {
           <Route path="list-bookings" index element={<ListBookings />} />
         </Route>
       </Routes>
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute   && <Footer />}
     </>
   );
 };
