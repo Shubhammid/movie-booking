@@ -19,7 +19,6 @@ const syncUserCreation = inngest.createFunction(
   }
 );
 
-
 const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-with-clerk" },
   { event: "clerk/user.deleted" },
@@ -28,7 +27,6 @@ const syncUserDeletion = inngest.createFunction(
     await User.findByIdAndDelete(id)
   }
 );
-
 
 const syncUserUpdation = inngest.createFunction(
   { id: "update-user-from-clerk" },
