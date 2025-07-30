@@ -16,7 +16,7 @@ const Favourite = () => {
     </div>
   ) : (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold text-center">No Favourite Movies Available</h1>
+      <h1 className="text-3xl font-bold text-center">No Favourite Movies</h1>
     </div>
   );
 };
